@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/ads")
@@ -34,5 +34,15 @@ public class AdController {
         } catch (IllegalAccessException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
+    }
+
+    @GetMapping("{tag}")
+    public List<Ad> getWithTag(@PathVariable String tag) {
+        List<Ad> ads = adRepository.getAll();
+        List<Ad> res = new ArrayList<>();
+
+        ads.forEach(ad -> { if(ad.getTags().contains(tag)) res.add(ad); });
+
+        return res;
     }
 }

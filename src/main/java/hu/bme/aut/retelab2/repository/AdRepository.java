@@ -46,4 +46,8 @@ public class AdRepository {
         }
         else throw new IllegalAccessException();
     }
+
+    public List<Ad> getAll() {
+        return em.createQuery("SELECT n FROM Ad n", Ad.class).getResultList();
+    }
 }

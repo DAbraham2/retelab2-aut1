@@ -1,9 +1,8 @@
 package hu.bme.aut.retelab2.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Ad {
@@ -20,6 +19,12 @@ public class Ad {
     private Date creationDate;
 
     private String secret;
+
+    @ElementCollection
+    @CollectionTable(
+            name = "TAG"
+    )
+    private List<String> tags;
 
     public void setId(Long id) {
         this.id = id;
@@ -67,5 +72,13 @@ public class Ad {
 
     public void setSecret(String secret) {
         this.secret = secret;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 }
