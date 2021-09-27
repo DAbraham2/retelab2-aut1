@@ -19,6 +19,8 @@ public class Ad {
 
     private Date creationDate;
 
+    private String secret;
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -57,5 +59,13 @@ public class Ad {
 
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public String getSecret() {
+        return secret;
+    }
+
+    public void setSecret(String secret) {
+        this.secret = secret;
     }
 }

@@ -1,5 +1,6 @@
 package hu.bme.aut.retelab2.repository;
 
+import hu.bme.aut.retelab2.Services.SecretGenerator;
 import hu.bme.aut.retelab2.domain.Ad;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ public class AdRepository {
     @Transactional
     public Ad save(Ad data){
         data.setCreationDate(new Date(System.currentTimeMillis()));
+        data.setSecret(SecretGenerator.generate());
         return em.merge(data);
     }
 
@@ -26,6 +28,22 @@ public class AdRepository {
                 .setParameter(2,max)
                 .getResultList();
 
+        res.forEach(ad -> ad.setSecret(""));
+
         return res;
+    }
+
+    public Ad getById(Long id) {
+        return em.find(Ad.class, id);
+    }
+
+    @Transactional
+    public Ad update(Ad T) throws IllegalAccessException {
+        Ad r = getById(T.getId());
+
+        if(r.getSecret().equals(T.getSecret())) {
+            return em.merge(T);
+        }
+        else throw new IllegalAccessException();
     }
 }
