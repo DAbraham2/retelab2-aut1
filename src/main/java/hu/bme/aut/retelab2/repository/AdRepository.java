@@ -16,7 +16,7 @@ public class AdRepository {
     private EntityManager em;
 
     @Transactional
-    public Ad save(Ad data){
+    public Ad save(Ad data) {
         data.setCreationDate(new Date(System.currentTimeMillis()));
         data.setSecret(SecretGenerator.generate());
         return em.merge(data);
@@ -25,7 +25,7 @@ public class AdRepository {
     public List<Ad> get(int min, int max) {
         List<Ad> res = em.createQuery("SELECT n FROM Ad n WHERE n.price BETWEEN ?1 AND ?2", Ad.class)
                 .setParameter(1, min)
-                .setParameter(2,max)
+                .setParameter(2, max)
                 .getResultList();
 
         res.forEach(ad -> ad.setSecret(""));
@@ -41,13 +41,19 @@ public class AdRepository {
     public Ad update(Ad T) throws IllegalAccessException {
         Ad r = getById(T.getId());
 
-        if(r.getSecret().equals(T.getSecret())) {
+        if (r.getSecret().equals(T.getSecret())) {
             return em.merge(T);
-        }
-        else throw new IllegalAccessException();
+        } else throw new IllegalAccessException();
     }
 
     public List<Ad> getAll() {
         return em.createQuery("SELECT n FROM Ad n", Ad.class).getResultList();
+    }
+
+    @Transactional
+    public void deleteById(long Id) {
+        Ad ad = getById(Id);
+
+        em.remove(ad);
     }
 }

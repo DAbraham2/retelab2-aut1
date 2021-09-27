@@ -1,6 +1,7 @@
 package hu.bme.aut.retelab2.domain;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -20,18 +21,20 @@ public class Ad {
 
     private String secret;
 
+    private LocalDateTime expireDate;
+
     @ElementCollection
     @CollectionTable(
             name = "TAG"
     )
     private List<String> tags;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -80,5 +83,13 @@ public class Ad {
 
     public void setTags(List<String> tags) {
         this.tags = tags;
+    }
+
+    public LocalDateTime getExpireDate() {
+        return expireDate;
+    }
+
+    public void setExpireDate(LocalDateTime expireDate) {
+        this.expireDate = expireDate;
     }
 }

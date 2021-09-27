@@ -9,7 +9,7 @@ public class SecretGenerator {
 
     public static String generate() {
         StringBuffer sb = new StringBuffer();
-        for(int i = 0; i < 6; i++)
+        for (int i = 0; i < 6; i++)
             sb.append(CHARS[RND.nextInt(CHARS.length)]);
         return sb.toString();
     }
